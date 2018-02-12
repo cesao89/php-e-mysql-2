@@ -1,0 +1,21 @@
+version: '3'
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql-container
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql-data
+      - ./dump.sql:/docker-entrypoint-initdb.d/dump.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+
+  nginx-php:
+    image: richarvey/nginx-php-fpm:php7
+    container_name: nginx-php
+    volumes:
+      - ./code:/var/www/html
+    ports:
+      - 80:80
+      - 443:443
